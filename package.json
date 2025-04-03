@@ -1,0 +1,16 @@
+{
+  "name": "stretch-test",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start:backend": "node backend/server.js",
+    "start:frontend": "npx live-server frontend",
+    "dev": "npm run start:backend & npm run start:frontend"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
+}
