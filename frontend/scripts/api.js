@@ -1,9 +1,9 @@
 // kodfil som hanterar anrop till backend-API:t
 
-export const fetchUsers = async () => {
+export const fetchUsers = async (page, resultsPerPage) => {
 
     try {
-        const response = await fetch('http://localhost:8000/api/users');
+        const response = await fetch(`http://localhost:8000/api/users?page=${page}&results=${resultsPerPage}`);
         const data = await response.json();
        
         console.log(data)
