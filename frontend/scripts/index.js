@@ -2,6 +2,8 @@
 import { fetchUsers } from "./api.js";
 
 let allUsers = [];
+let currentPage = 1;
+const resultsPerPage = 12;
 
 const createUserCard = (user) => {
 
@@ -41,6 +43,32 @@ const renderUsers = (users) => {
 
     });
 }
+
+const updatePagination = () => {
+    document.getElementById('currentPage').textContent = currentPage;
+}
+
+const loadMoreUsers = async () => {
+    try {
+        const users = await fetchUsers(currentPage, resultsPerPage);
+        renderUsers(users);
+        updatePagination();
+    } catch(error){
+        console.error('Error loading users', error);
+    }
+}
+
+document.getElementById('prevPage').addEventListener('click', () => {
+    if (currentPage > 1){
+        currentPage--;
+        loadMoreUsers();
+    }
+})
+
+document.getElementById('nextPage').addEventListener('click', () => {
+    currentPage++;
+    loadMoreUsers();
+})
 
 const searchUser = () => {
     const searchInput = document.getElementById('search').value.toLowerCase();

@@ -1,8 +1,9 @@
 //servicefil som hanterar anrop till random user API
 
-export const getUsersFromApi = async () => {
+export const getUsersFromApi = async (page = 1, resultsPerPage = 12) => {
 
-    const url = 'https://randomuser.me/api/?results=100';
+    const seed = 'abc';
+    const url = `https://randomuser.me/api/?page=${page}&results=${resultsPerPage}&seed=${seed}`;
 
     try {
         //här görs ett http-anrop med fetch
