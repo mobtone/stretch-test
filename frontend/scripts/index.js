@@ -2,6 +2,7 @@
 import { fetchUsers } from "./api.js";
 
 let allUsers = [];
+let filteredUsers = [];
 let currentPage = 1;
 const resultsPerPage = 12;
 
@@ -46,53 +47,57 @@ const renderUsers = (users) => {
 
 const updatePagination = () => {
     document.getElementById('currentPage').textContent = currentPage;
+    document.getElementById('nextPage').disabled = currentPage * resultsPerPage >= filteredUsers.length;
 }
 
-const loadMoreUsers = async () => {
-    try {
-        const users = await fetchUsers(currentPage, resultsPerPage);
-        renderUsers(users);
-        updatePagination();
-    } catch(error){
-        console.error('Error loading users', error);
-    }
+const loadUsers = () => {
+    const startIndex = (currentPage -1) * resultsPerPage;
+    const endIndex = startIndex + resultsPerPage;
+    const usersToShow =filteredUsers.slice(startIndex, endIndex);
+    renderUsers(usersToShow);
+    updatePagination();
+
 }
+
 
 document.getElementById('prevPage').addEventListener('click', () => {
     if (currentPage > 1){
         currentPage--;
-        loadMoreUsers();
+        loadUsers();
     }
 })
 
 document.getElementById('nextPage').addEventListener('click', () => {
-    currentPage++;
-    loadMoreUsers();
+   /* if(currentPage * resultsPerPage < filteredUsers.length)*/{
+        currentPage++;
+        loadUsers();
+    }
+
 })
 
 const searchUser = () => {
     const searchInput = document.getElementById('search').value.toLowerCase();
 
 
-const filteredUsers = allUsers.filter(user =>
+    filteredUsers = allUsers.filter(user =>
     user.name.first.toLowerCase().includes(searchInput) ||
     user.name.last.toLowerCase().includes(searchInput) ||
     user.email.toLowerCase().includes(searchInput)
 )
-if (searchInput === '') {
-    renderUsers(allUsers);
-    return;
-} 
-renderUsers(filteredUsers);
+currentPage = 1;
+loadUsers();
 
 }
 
-const showUsers = async () => {
-    allUsers = await fetchUsers();
-    renderUsers(allUsers);
 
-    const searchButton = document.getElementById('buttonSearch');
-    searchButton.addEventListener('click', searchUser);
+const showUsers = async () => {
+    allUsers = await fetchUsers(1, 100);
+    filteredUsers = [...allUsers];
+
+    document.getElementById('buttonSearch').addEventListener('click', searchUser);
+    document.getElementById('search').addEventListener('keyup', searchUser);
+
+    loadUsers();
 }
 
 showUsers();

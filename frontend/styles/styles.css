@@ -87,7 +87,7 @@ a:hover{
 
 .pagination{
     display:flex;
-    gap:70px;
+    gap:10vh;
     padding: 10px 20 px;
     margin-top: 20px;
     
@@ -98,7 +98,7 @@ a:hover{
     height: 4vh;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 2vh;
 }
 #nextPage:hover{
     background-color: rgb(194, 194, 194);
@@ -109,7 +109,7 @@ a:hover{
     height: 4vh;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 2vh;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 #prevPage:hover{
@@ -117,7 +117,7 @@ a:hover{
 }
 
 #currentPage{
-    font-size: 20px;
+    font-size:2vh;
     font-weight: bold;
     color:rgb(129, 129, 129);
 }
